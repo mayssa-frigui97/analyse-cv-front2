@@ -1,0 +1,241 @@
+<div class="card">
+  <div class="card-header">Candidats</div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-4 selectCom">
+        <ng-select [items]="competences" bindLabel="nom" bindValue="nom" [virtualScroll]="true"
+        placeholder="Selectionner les compétences" appendTo="body" multiple="true"
+        [(ngModel)]="selectedComp" (change)="getFilterCands(selectedComp)">
+      </ng-select>
+    </div>
+    <div class="col-md-3"></div>
+      <div class="col-md-4 text-center btnAdd">
+        <button type="button" class="btn btn-primary btnAdd"><i class="fa fa-plus"></i>&nbsp;Ajouter candidat</button>
+      </div>
+    </div>
+    <div class="row rowSearch">
+      <div class="col-md-8"></div>
+      <div class="input-group col-md-4 recherchBox">
+        <div class="input-group-prepend">
+          <span class="input-group-text spanSearch" (click)="searchCands(searchWord)"><i class="fa fa-search"></i></span>
+        </div>
+        <input type="text" id="input1-group1" name="input1-group1" class="form-control" placeholder="Rechercher" [(ngModel)]="searchWord"
+        (keyup)="search($event)">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <table mat-table class="table table-striped full-width-table" matSort aria-label="Elements">
+          <!-- Id Column -->
+          <ng-container matColumnDef="nom">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nom et prénom</th>
+            <td mat-cell *matCellDef="let row">{{row.nom}}</td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+            <td mat-cell *matCellDef="let row">{{row.email}}</td>
+          </ng-container>
+          <ng-container matColumnDef="tel">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>N° téléphone</th>
+            <td mat-cell *matCellDef="let row">{{row.tel}}</td>
+          </ng-container>
+          <ng-container matColumnDef="recommande">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Recommandé</th>
+            <td mat-cell *matCellDef="let row">
+              <input type="checkbox" name="recommande" [ngModel]="row.recommande" (change)="changeRecommande($event,row.id)">
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+            <td mat-cell *matCellDef="let row">
+                <!-- <a [routerLink]="['cv', row.id]">
+                  <img class="imgCV" src="./../../../../assets/img/cv1.png" width="28px" title="voir CV candidat">
+                </a> -->
+                <!-- <button type="button" class="btn btn-secondary mr-1" data-toggle="modal" (click)="largeModal.show()"
+                (click)="myUser = row" title="affecter candidat"><img src="./../../../../assets/img/add-user2.png" width="20px">
+                </button>
+                <button type="button" class="btn btn-danger mr-1" data-toggle="modal" (click)="dangerModal.show()"
+                (click)="myUser = row" title="supprimer candidat">
+                  <img src="./../../../../assets/img/delete.png" width="20px">
+                </button> -->
+              <button type="button" class="btn btn-sm btn-primary mr-1" style="margin-bottom: 4px" title="voir CV candidat"
+              [routerLink]="['cv', row.id]">
+                <i class="fa fa-eye"></i>
+              </button>
+              <button type="button" class="btn btn-sm btn-primary mr-1" style="margin-bottom: 4px"
+                (click)="largeModal.show()" (click)="myUser = row" title="affecter candidat">
+                <i class="fa fa-plus"></i>
+              </button>
+              <button type="button" class="btn btn-brand btn-sm btn-danger mr-1" style="margin-bottom: 4px"
+              (click)="myUser = row" title="supprimer candidat" (click)="dangerModal.show()">
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <progressbar *ngIf="dataSource.data.length === 0 && test"
+          class="progress-bar progress-bar-striped progress-bar-animated" [value]="0" [max]="200" [type]="'success'">
+        </progressbar>
+        <div class="alert alert-danger" *ngIf="dataSource.data.length === 0 && !test">
+          <ul class="fa-ul">
+            <li>
+              <i class="fa fa-info-circle fa-li"></i>  Aucun candidat correspond aux filtre de recherche spécifiés.
+            </li>
+          </ul>
+        </div>
+        <mat-paginator #paginator [pageIndex]="0" [pageSize]="5">
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modals -->
+<div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+[config]="{backdrop: 'static',  keyboard: false}">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Affecter candidat</h4>
+        <button type="button" class="close" (click)="largeModal.hide();formulaire.resetForm()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row " style="margin-left: 5px;margin-right: 5px;">
+          <form #formulaire="ngForm" role="form" class="row" name="form">
+            <!-- <div class="row"> -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-8">Nom utilisateur</label>
+                  <div class="col-lg-8">
+                    <input required type="text" placeholder="" id="nomUtilisateur" class="form-control" ngModel name="nomUtilisateur">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-8">CIN</label>
+                  <div class="col-lg-8">
+                    <input required type="number" id="cin" class="form-control" ngModel name="cin">
+                  </div>
+                </div>
+              </div>
+            <!-- </div> -->
+            <!-- <div class="row"> -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-8">Poste</label>
+                  <div class="col-lg-8">
+                    <input required type="text" placeholder="" id="poste" class="form-control" ngModel name="poste">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-8">Date d'embauche</label>
+                  <div class="col-lg-8">
+                    <input required type="date" placeholder="Date d'embauche" id="dateEmb" class="form-control" ngModel name="dateEmb">
+                  </div>
+                </div>
+              </div>
+            <!-- </div> -->
+            <!-- <div class="row"> -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-8">E-mail</label>
+                  <div class="col-lg-8">
+                    <input required type="email" placeholder="exemple@gmail.com" ngModel id="emailPro" class="form-control" name="emailPro">
+                  </div>
+                </div>
+              </div>
+            <!-- </div> -->
+            <!-- <div class="row"> -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-8">N° Téléphone</label>
+                  <div class="col-lg-8">
+                    <input type="tel" placeholder="" id="telPro" class="form-control" ngModel name="telPro">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-8">Pôle</label>
+                  <div class="col-lg-8">
+                    <select required class="custom-select custom-select-md" ngModel name="pole" id="pole">
+                      <!-- <option disabled selected>Selectionner le pôle</option> -->
+                      <option [value]="pole.id" *ngFor="let pole of poles">{{pole.nom}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            <!-- </div> -->
+            <!-- <div class="row"> -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-8">Chef d'équipe</label>
+                  <div class="col-lg-8">
+                    <select required class="custom-select custom-select-md" ngModel name="equipe" id="equipe">
+                      <!-- <option disabled selected>Selectionner le chef d'équipe</option> -->
+                      <option [value]="equipe.id" *ngFor="let equipe of equipes">{{equipe.teamleader.nom | titlecase}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-8">Rôle</label>
+                  <div class="col-lg-8">
+                    <select required class="custom-select custom-select-md" ngModel name="role" id="role">
+                      <!-- <option disabled selected>Selectionner le rôle</option> -->
+                      <option [value]="r.role" *ngFor="let r of roles">{{r.role | titlecase}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-8">Salaire</label>
+                  <div class="col-lg-8">
+                    <input type="number" placeholder="" id="salaire" class="form-control" ngModel name="salaire">
+                  </div>
+                </div>
+              </div>
+            <!-- </div> -->
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="largeModal.hide();formulaire.resetForm()">Annuler</button>
+        <button [disabled]="formulaire.invalid" type="submit" class="btn btn-primary" (click)="affecterCandidat(formulaire.value,myUser);dangerModal.hide()">Enregistrer</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Supprimer un candidat</h4>
+        <button type="button" class="close" (click)="dangerModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Êtes-vous sûr de vouloir supprimer ce candidat {{myUser?.nom}} ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="dangerModal.hide()">Annuler</button>
+        <button type="button" class="btn btn-danger" (click)="deleteCand(myUser.id);dangerModal.hide()">Confirmer</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

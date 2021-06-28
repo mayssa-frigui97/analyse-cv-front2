@@ -1,0 +1,79 @@
+<div class="animated fadeIn">
+  <div class="card-columns cols-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-3 labelComp">
+          Compétences
+          </div>
+          <div class="col-md-6">
+            <ng-select [items]="competences" bindLabel="nom" bindValue="nom" [virtualScroll]="true"
+            placeholder="Selectionner les compétences" appendTo="body" multiple="true"
+            [(ngModel)]="selectedComp" (change)="changeCompetence(selectedComp)">
+            </ng-select>
+          </div>
+          <div class="col-md-3 mb">
+            <ng-select [items]="nombres" bindLabel="nom" bindValue="nom" [(ngModel)]="selectedNb"
+            placeholder="Nombre" (change)="changeNombre(selectedNb)">
+            </ng-select>
+          </div>
+          </div>
+      </div>
+      <div class="card-body">
+        <div class="chart-wrapper">
+          <canvas *ngIf="barChartData"
+          baseChart class="chart"
+          [datasets]="barChartData"
+          [labels]="barChartLabels"
+          [options]="barChartOptions"
+          [legend]="barChartLegend"
+          [chartType]="barChartType"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header headerDiff">
+        Poles
+      </div>
+      <div class="card-body">
+        <div class="chart-wrapper">
+          <canvas baseChart class="chart"
+          *ngIf="doughnutChartDataPole"
+          [data]="doughnutChartDataPole"
+          [labels]="doughnutChartLabelsPole"
+          [colors]="chartColors"
+          [chartType]="doughnutChartType"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header headerDiff">
+        Formations
+      </div>
+      <div class="card-body">
+        <div class="chart-wrapper">
+          <canvas *ngIf="pieChartData"
+          baseChart class="chart"
+          [data]="pieChartData"
+          [labels]="pieChartLabels"
+          [chartType]="pieChartType"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="card" >
+      <div class="card-header headerDiff">
+        Equipes
+      </div>
+      <div class="card-body">
+        <div class="chart-wrapper">
+          <canvas *ngIf="doughnutChartDataEquipe"
+          baseChart class="chart"
+          [data]="doughnutChartDataEquipe"
+          [labels]="doughnutChartLabelsEquipe"
+          [chartType]="doughnutChartType"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
