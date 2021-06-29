@@ -27,3 +27,7 @@ th.mat-header-cell:first-of-type{
   margin-top: 40px!important;
   margin-bottom: 15px!important;
 }
+
+td.mat-cell.cdk-cell.cdk-column-recommande.mat-column-recommande.ng-star-inserted , td.mat-cell.cdk-cell.cdk-column-id.mat-column-id.ng-star-inserted{
+  text-align: left;
+}

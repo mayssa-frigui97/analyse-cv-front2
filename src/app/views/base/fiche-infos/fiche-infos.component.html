@@ -1,1 +1,150 @@
-<p>fiche-infos works!</p>
+<div class="page-content cvContainer">
+  <div class="container">
+    <div class="cover shadow-lg bg-white">
+      <div class="cover-bg p-3 p-lg-4 text-white">
+        <div class="row">
+          <div class="col-lg-4 col-md-5">
+            <div *ngIf="user.avatar" class="avatar hover-effect bg-white shadow-sm p-1"><img src="./../../../../assets/img/{{user.avatar}}"
+                width="200" height="200" /></div>
+            <div *ngIf="!user.avatar" class="avatar hover-effect bg-white shadow-sm p-1"><img src="./../../../../assets/img/employee3.png"
+                width="200" height="200" /></div>
+          </div>
+          <div class="col-lg-6 col-md-7 text-center text-md-start">
+            <h2 class="h1 mt-2">{{user.nom | titlecase}}</h2>
+            <h6>{{user.poste}}</h6><br>
+            <p class="text-center"><a href="{{user.cv.cmptLinkedin}}"><i class="fa fa-linkedin-square fa-3x"></i></a></p>
+          </div>
+        </div>
+      </div>
+      <div class="about-section pt-4 px-3 px-lg-4 mt-1">
+        <div class="row">
+          <div class="col-md-8">
+            <h2 class="h3 mb-3"><i class="fa fa-address-book"></i> Contact</h2>
+            <div class="row mt-2">
+              <div class="col-sm-4">
+                <div class="pb-1"> <strong> Date de naissance</strong></div>
+              </div>
+              <div class="col-sm-8">
+                <div class="pb-1 text-secondary"><i class="fa fa-calendar fa-lg"></i>&nbsp; {{user.dateNaiss | date: 'd MMMM y'}}</div>
+              </div>
+              <div class="col-sm-4">
+                <div class="pb-1"> <strong>E-mail</strong></div>
+              </div>
+              <div class="col-sm-8">
+                <div class="pb-1 text-secondary"><i class="fa fa-envelope fa-lg"></i>&nbsp;{{user.emailPro}}</div>
+              </div>
+              <div class="col-sm-4">
+                <div class="pb-1"> <strong>N° Téléphone</strong></div>
+              </div>
+              <div class="col-sm-8">
+                <div class="pb-1 text-secondary"><i class="fa fa-phone fa-lg"></i>&ensp;{{user.telPro}}</div>
+              </div>
+              <div class="col-sm-4">
+                <div class="pb-1"> <strong>Adresse</strong></div>
+              </div>
+              <div class="col-sm-8">
+                <div class="pb-1 text-secondary"><i class="fa fa-map-marker fa-lg"></i>&ensp; {{user.adresse}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5 offset-md-1">
+          </div>
+        </div>
+      </div>
+      <hr class="d-print-none" *ngIf="user.cv.competences"/>
+      <div class="skills-section px-3 px-lg-4" *ngIf="user.cv.competences">
+        <h2 class="h3 mb-3"><i class="fa fa-wrench"></i> Compétences</h2>
+        <div class="row">
+          <div class="col-md-6" *ngFor="let competence of user.cv.competences">
+            <div class="mb-2"><span>▪ {{competence.nom}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="d-print-none" *ngIf="user.cv.experiences"/>
+      <div class="work-experience-section px-3 px-lg-4" *ngIf="user.cv.experiences">
+        <h2 class="h3 mb-4"><i class="fa fa-briefcase"></i> Expériences Professionnelles</h2>
+        <div class="timeline">
+          <div class="timeline-card timeline-card-primary card shadow-sm">
+            <div class="card-body">
+              <div class="h6 mb-1"> {{user.cv.experiences}}</div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="d-print-none" *ngIf="user.cv.formations"/>
+      <div class="page-break"></div>
+      <div class="education-section px-3 px-lg-4 pb-4" *ngIf="user.cv.formations">
+        <h2 class="h3 mb-4"><i class="fa fa-graduation-cap"></i> Formation académique</h2>
+        <div class="timeline">
+          <div class="timeline-card timeline-card-info card shadow-sm">
+            <div class="card-body">
+              <div class="h6 mb-1">{{user.cv.formations}}</div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="d-print-none" *ngIf="user.cv.projets"/>
+      <div class="page-break"></div>
+      <div class="education-section px-3 px-lg-4 pb-4" *ngIf="user.cv.projets">
+        <h2 class="h3 mb-4"><i class="fa fa-cogs"></i> Projets</h2>
+        <div class="timeline">
+          <div class="timeline-card timeline-card-secondary card shadow-sm">
+            <div class="card-body">
+              <div class="h6 mb-1">{{user.cv.projets}}</div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="d-print-none" *ngIf="user.cv.certificats"/>
+      <div class="page-break" ></div>
+      <div class="skills-section px-3 px-lg-4" *ngIf="user.cv.certificats">
+        <h2 class="h3 mb-3"><i class="fa fa-trophy"></i> Certifications</h2>
+        <div class="row">
+          <div class="col-md-10">
+            <div class="mb-2"><span>{{user.cv.certificats}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="d-print-none" *ngIf="user.cv.langues"/>
+      <div class="page-break"></div>
+      <div class="skills-section px-3 px-lg-4" *ngIf="user.cv.langues">
+        <h2 class="h3 mb-3"><i class="fa fa-language"></i> Langues</h2>
+        <div class="row">
+          <div class="col-md-6" *ngFor="let langue of user.cv.langues">
+            <div class="mb-2"><span>▪ {{langue}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="d-print-none" *ngIf="user.cv.activiteAssociatives"/>
+      <div class="page-break"></div>
+      <div class="education-section px-3 px-lg-4 pb-4" *ngIf="user.cv.activiteAssociatives">
+        <h2 class="h3 mb-4"><i class="fa fa-handshake-o"></i> Activités associatives</h2>
+        <div class="timeline">
+          <div class="timeline-card timeline-card-success card shadow-sm">
+            <div class="card-body">
+              <div class="h6 mb-1">{{user.cv.activiteAssociatives}}</div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="d-print-none" *ngIf="user.cv.interets"/>
+      <div class="page-break"></div>
+      <div class="skills-section px-3 px-lg-4" *ngIf="user.cv.interets">
+        <h2 class="h3 mb-3"><i class="fa fa-heart"></i> Centre d'intérêt</h2>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-2"><span>▪ {{user.cv.interets}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

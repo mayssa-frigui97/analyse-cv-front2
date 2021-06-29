@@ -22,7 +22,6 @@ import { DefaultLayoutComponent } from './containers';
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
-import { RegisterComponent } from './views/register/register.component';
 import { HttpClientModule } from '@angular/common/http';
 import { GraphQLModule } from './graphql.module';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
@@ -82,7 +81,6 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     P404Component,
     P500Component,
     LoginComponent,
-    RegisterComponent,
     DispatcherComponent
   ],
   providers: [

@@ -23,7 +23,7 @@ export class DispatcherComponent implements OnInit {
   checkLoggedIn() {
     this.loggedIn = false;
     if (this.auth.getToken()) {
-      this.Routing.navigateByUrl('/admin');
+      this.Routing.navigateByUrl('/admin');//ken fama token yhezek lel admin wala login
     } else {
       this.Routing.navigateByUrl('/login');
     }

@@ -1,24 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CardsComponent } from './cards.component';
 import { FormsComponent } from './forms.component';
-import { SwitchesComponent } from './switches.component';
-import { TablesComponent } from './tables.component';
 import { TabsComponent } from './tabs.component';
-import { CarouselsComponent } from './carousels.component';
-import { CollapsesComponent } from './collapses.component';
-import { PaginationsComponent } from './paginations.component';
-import { PopoversComponent } from './popovers.component';
 import { ProgressComponent } from './progress.component';
-import { TooltipsComponent } from './tooltips.component';
-import { NavbarsComponent } from './navbars/navbars.component';
 import { CandidatsComponent } from './candidats/candidats.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CollaborateursComponent } from './collaborateurs/collaborateurs.component';
 import { FicheInfosComponent } from './fiche-infos/fiche-infos.component';
 import { HistoriqueComponent } from './historique/historique.component';
-import { CvComponent } from './cv/cv.component';
+import { CvComponent } from './cv-cand/cv.component';
+import { UserRole } from '../../Enums/UserRole';
+import { AuthGuard } from '../../Services/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -34,50 +27,67 @@ const routes: Routes = [
       {
         path: 'dashbord',
         component: DashboardComponent,
+        canActivate: [AuthGuard],
         data: {
-          title: 'Dashbord'
+          title: 'Dashbord',
+          allowedRoles: [UserRole.COLLABORATEUR, UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]
         }
       },
       {
         path: 'fiche-infos',
         component: FicheInfosComponent,
+        canActivate: [AuthGuard],
         data: {
-          title: "Fiche d'informations"
+          title: "Fiche d'informations",
+          allowedRoles: [UserRole.COLLABORATEUR, UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]
         }
       },
       {
         path: 'historique',
         component: HistoriqueComponent,
+        canActivate: [AuthGuard],
         data: {
-          title: 'Historique'
+          title: 'Historique',
+          allowedRoles: [UserRole.COLLABORATEUR, UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]
         }
       },
       {
         path: 'candidats',
         component: CandidatsComponent,
+        // data: {
+        //
+        // }
+        canActivate: [AuthGuard],
         data: {
-          title: 'Candidats'
+          title: 'Candidats',
+          allowedRoles: [UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]
         }
       },
       {
         path: 'candidats/cv/:id',
         component: CvComponent,
+        canActivate: [AuthGuard],
         data: {
-          title: 'Cv'
+          title: 'CV',
+          allowedRoles: [UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]
         }
       },
       {
         path: 'collaborateurs',
         component: CollaborateursComponent,
+        canActivate: [AuthGuard],
         data: {
-          title: 'Collaborateurs'
+          title: 'Collaborateurs',
+          allowedRoles: [UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]
         }
       },
       {
         path: 'collaborateurs/cv/:id',
-        component: CvComponent,
+        component: FicheInfosComponent,
+        canActivate: [AuthGuard],
         data: {
-          title: 'Cv'
+          title: 'CV',
+          allowedRoles: [UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]
         }
       },
       {
@@ -88,52 +98,10 @@ const routes: Routes = [
         }
       },
       {
-        path: 'switches',
-        component: SwitchesComponent,
-        data: {
-          title: 'Switches'
-        }
-      },
-      {
-        path: 'tables',
-        component: TablesComponent,
-        data: {
-          title: 'Tables'
-        }
-      },
-      {
         path: 'tabs',
         component: TabsComponent,
         data: {
           title: 'Tabs'
-        }
-      },
-      {
-        path: 'carousels',
-        component: CarouselsComponent,
-        data: {
-          title: 'Carousels'
-        }
-      },
-      {
-        path: 'collapses',
-        component: CollapsesComponent,
-        data: {
-          title: 'Collapses'
-        }
-      },
-      {
-        path: 'paginations',
-        component: PaginationsComponent,
-        data: {
-          title: 'Pagination'
-        }
-      },
-      {
-        path: 'popovers',
-        component: PopoversComponent,
-        data: {
-          title: 'Popover'
         }
       },
       {
@@ -143,20 +111,6 @@ const routes: Routes = [
           title: 'Progress'
         }
       },
-      {
-        path: 'tooltips',
-        component: TooltipsComponent,
-        data: {
-          title: 'Tooltips'
-        }
-      },
-      {
-        path: 'navbars',
-        component: NavbarsComponent,
-        data: {
-          title: 'Navbars'
-        }
-      }
     ]
   }
 ];

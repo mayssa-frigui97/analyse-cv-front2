@@ -105,7 +105,7 @@ const findEquipes = gql`
   }`;
 
 const findEquipesPole = gql`
-  query findEquipesPole ($idPoles: [Int!]!){
+  query findEquipesPole ($idPoles: [Int!]){
     findEquipesPole(idPoles: $idPoles) {
       id
       nom

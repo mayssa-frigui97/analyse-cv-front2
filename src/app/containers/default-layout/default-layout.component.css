@@ -50,3 +50,53 @@ mdb-card-title.card-title {
   border-color: #00695C;
   color: #fff;
 }
+
+mdb-card-footer.card-footer{
+  display: block;
+  margin-left: auto!important;
+  margin-right: auto!important;
+  background-color: white;
+  margin-top: none!important;
+  padding-top: 0;
+}
+
+.card-footer {
+  border-top: none!important;
+}
+
+/* span.navbar-toggler-icon {
+  display: none!important;
+} */
+
+.app-footer {
+  background:linear-gradient(40deg,#2096ff,#05ffa3);
+  color: white!important;
+  text-align: center!important;
+  display: block!important;
+  padding-top: 1%!important;
+}
+
+.app-footer a{
+  color: white!important;
+  text-decoration: none!important;
+}
+
+hr {
+  margin: 0;
+  color: #8BC34A;
+  background-color: currentColor;
+  border: 0;
+  opacity: 0.25;
+}
+
+hr:not([size]){
+  height:1px
+}
+
+.d-print-none{
+  display:block!important
+}
+
+/* .fa-bell{
+  color: rgb(199, 192, 192);
+} */

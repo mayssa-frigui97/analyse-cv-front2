@@ -48,7 +48,7 @@
         <table mat-table class="table table-striped full-width-table" matSort aria-label="Elements">
           <ng-container matColumnDef="nom">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Nom et prénom</th>
-            <td mat-cell *matCellDef="let row">{{row.nom}}</td>
+            <td mat-cell *matCellDef="let row">{{row.nom | titlecase}}</td>
           </ng-container>
           <ng-container matColumnDef="emailPro">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
@@ -69,7 +69,6 @@
               <span *ngIf="!row.equipe && row.role == 'RH'"> </span>
               <span *ngIf="!row.equipe && row.role == 'RP'"> {{row.id | getPole:poles}}</span>
             </td>
-            <!-- <td mat-cell *matCellDef="let row"><span *ngIf="!row.equipe && row.role === 'RP'">hey{{row.role}}{{row.id | getPole:poles}}</span></td> -->
           </ng-container>
           <ng-container matColumnDef="equipe" *ngIf="!equipe">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Équipe</th>
@@ -89,7 +88,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
             <td mat-cell *matCellDef="let row">
               <button type="button" class="btn btn-sm btn-primary mr-1" style="margin-bottom: 4px"
-                title="voir CV collaborateur" [routerLink]="['cv', row.id]">
+                title="voir CV collaborateur" [routerLink]="['cv', row.id]" (click)="createNotif(row.id)">
                 <i class="fa fa-eye"></i>
               </button>
               <button type="button" class="btn btn-sm btn-primary mr-1" style="margin-bottom: 4px"
