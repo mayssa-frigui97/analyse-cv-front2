@@ -60,7 +60,7 @@ export class CollaborateursComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
 
-  displayedColumns = ['nom', 'emailPro', 'poste', 'dateEmb', 'pole', 'equipe', 'evaluation', 'id'];
+  displayedColumns = ['nom', 'emailPro', 'poste', 'pole', 'equipe', 'evaluation', 'id'];
 
 
   constructor(
@@ -75,7 +75,7 @@ export class CollaborateursComponent implements OnInit {
     this.userAuth = this.auth.getUser().nom;
     this.userRole = this.auth.getRole();
     if (this.userRole == UserRole.RP) {
-      this.displayedColumns = ['nom', 'emailPro', 'poste', 'dateEmb', 'equipe', 'evaluation', 'id'];
+      this.displayedColumns = ['nom', 'emailPro', 'poste', 'equipe', 'evaluation', 'id'];
       this.pole = this.auth.getPole();
       this.getEquipesPoles([this.pole]);
       this.getPoleName(this.pole);

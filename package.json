@@ -67,6 +67,7 @@
     "ngx-toastr": "^14.0.0",
     "rxjs": "^6.6.6",
     "simple-line-icons": "^2.5.5",
+    "socket.io-client": "^2.4.0",
     "ts-helpers": "^1.1.2",
     "tslib": "^2.0.0",
     "web-animations-js": "^2.3.2",

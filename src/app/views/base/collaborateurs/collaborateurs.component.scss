@@ -28,3 +28,24 @@ th.mat-header-cell:first-of-type{
   margin-top: 40px!important;
   margin-bottom: 15px!important;
 }
+
+button.btn.btn-sm.btn-danger.mr-1, button.btn.btn-sm.btn-primary.mr-1 {
+  padding: 4px 5px!important;
+}
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder .ng-input{
+  padding-left: 0!important;
+  font-size: 12px!important;
+}
+
+.ng-select.ng-select.ng-select-multiple.ng-select-searchable.ng-select-clearable.ng-pristine.ng-valid{
+  font-size: 12px!important;
+}
+
+td.mat-cell {
+  font-size: 13px;
+}
+
+.ng-select.ng-select.ng-select-multiple.ng-select-searchable.ng-select-clearable.ng-untouched.ng-pristine.ng-valid {
+  margin-bottom: 7px;
+}

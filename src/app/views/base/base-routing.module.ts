@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { FormsComponent } from './forms.component';
-import { TabsComponent } from './tabs.component';
-import { ProgressComponent } from './progress.component';
 import { CandidatsComponent } from './candidats/candidats.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CollaborateursComponent } from './collaborateurs/collaborateurs.component';
@@ -22,7 +19,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'candidats'
+        redirectTo: 'dashbord'
       },
       {
         path: 'dashbord',
@@ -54,9 +51,6 @@ const routes: Routes = [
       {
         path: 'candidats',
         component: CandidatsComponent,
-        // data: {
-        //
-        // }
         canActivate: [AuthGuard],
         data: {
           title: 'Candidats',
@@ -89,28 +83,7 @@ const routes: Routes = [
           title: 'CV',
           allowedRoles: [UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]
         }
-      },
-      {
-        path: 'forms',
-        component: FormsComponent,
-        data: {
-          title: 'Forms'
-        }
-      },
-      {
-        path: 'tabs',
-        component: TabsComponent,
-        data: {
-          title: 'Tabs'
-        }
-      },
-      {
-        path: 'progress',
-        component: ProgressComponent,
-        data: {
-          title: 'Progress'
-        }
-      },
+      }
     ]
   }
 ];

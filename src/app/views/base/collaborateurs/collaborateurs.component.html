@@ -58,10 +58,10 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Poste</th>
             <td mat-cell *matCellDef="let row">{{row.poste}}</td>
           </ng-container>
-          <ng-container matColumnDef="dateEmb">
+          <!-- <ng-container matColumnDef="dateEmb">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Date d'embauche</th>
             <td mat-cell *matCellDef="let row">{{row.dateEmb | date: 'dd/MM/yyyy'}}</td>
-          </ng-container>
+          </ng-container> -->
           <ng-container matColumnDef="pole" *ngIf="!equipe && !pole">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Pôle</th>
             <td mat-cell *matCellDef="let row">
@@ -80,7 +80,9 @@
           <ng-container matColumnDef="evaluation">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Évalution</th>
             <td mat-cell *matCellDef="let row">
-              <span *ngIf="row.evaluation">{{row.evaluation}}</span>
+              <span *ngIf="row.evaluation">
+                <app-star-rating rating={{row.evaluation}}></app-star-rating>
+              </span>
               <span *ngIf="!row.evaluation"> </span>
             </td>
           </ng-container>

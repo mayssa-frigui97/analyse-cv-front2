@@ -195,3 +195,16 @@ footer a:not(.nav-link) {
 .avatar.hover-effect.bg-white.shadow-sm.p-1 {
   margin-top: 50px;
 }
+
+
+@media (min-width: 992px){
+  .education-section.px-3.px-lg-4.pb-4{
+    width: 1070px;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 992px){
+  .education-section.px-3.px-lg-4.pb-4{
+    width: 650px;
+  }
+}

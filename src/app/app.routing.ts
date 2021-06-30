@@ -8,8 +8,6 @@ import { DefaultLayoutComponent } from './containers';
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
-import { UserRole } from './Enums/UserRole';
-import { AuthGuard } from './Services/auth-guard.service';
 
 export const routes: Routes = [
   {
@@ -52,10 +50,6 @@ export const routes: Routes = [
       {
         path: 'base',
         loadChildren: () => import('./views/base/base.module').then(m => m.BaseModule),
-      },
-      {
-        path: 'buttons',
-        loadChildren: () => import('./views/buttons/buttons.module').then(m => m.ButtonsModule)
       },
       {
         path: 'dashboard',

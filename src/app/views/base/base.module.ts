@@ -7,15 +7,12 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 
-import { CardsComponent } from './cards.component';
 
 // Forms Component
-import { FormsComponent } from './forms.component';
 
 
 // Tabs Component
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { TabsComponent } from './tabs.component';
 
 // Carousel Component
 import { CarouselModule } from 'ngx-bootstrap/carousel';
@@ -34,17 +31,14 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 
 // Progress Component
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
-import { ProgressComponent } from './progress.component';
 
 // Tooltip Component
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 // navbars
-import { NavbarsComponent } from './navbars/navbars.component';
 
 // Components Routing
 import { BaseRoutingModule } from './base-routing.module';
-import { DataTableComponent } from './data-table/data-table.component';
 import { CandidatsComponent } from './candidats/candidats.component';
 
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
@@ -62,6 +56,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { CvComponent } from './cv-cand/cv.component';
 import { FicheInfosComponent } from './fiche-infos/fiche-infos.component';
 import { HistoriqueComponent } from './historique/historique.component';
+import { StarRatingComponent } from './star-rating/star-rating.component';
 registerLocaleData(localeFr);
 
 @NgModule({
@@ -91,19 +86,14 @@ registerLocaleData(localeFr);
     TabsModule.forRoot(),
   ],
   declarations: [
-    CardsComponent,
-    FormsComponent,
-    TabsComponent,
-    ProgressComponent,
-    NavbarsComponent,
-    DataTableComponent,
     CandidatsComponent,
     DashboardComponent,
     CollaborateursComponent,
     CollaborateursPipe,
     CvComponent,
     FicheInfosComponent,
-    HistoriqueComponent
+    HistoriqueComponent,
+    StarRatingComponent,
   ],
   providers:[{ provide: LOCALE_ID, useValue: 'fr-FR'}, DatePipe]
 })
