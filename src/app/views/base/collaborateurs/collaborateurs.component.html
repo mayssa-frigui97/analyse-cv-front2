@@ -93,11 +93,11 @@
                 title="voir CV collaborateur" [routerLink]="['cv', row.id]" (click)="createNotif(row.id)">
                 <i class="fa fa-eye"></i>
               </button>
-              <button type="button" class="btn btn-sm btn-primary mr-1" style="margin-bottom: 4px"
+              <button type="button" class="btn btn-sm btn-primary mr-1" style="margin-bottom: 4px" *ngIf="!equipe && !pole"
                 (click)="myUser = row;selectedRole=myUser.role;primaryModal.show()" title="modifier role">
                 <i class="fa fa-pencil-square-o"></i>
               </button>
-              <button type="button" class="btn btn-sm btn-danger mr-1" style="margin-bottom: 4px"
+              <button type="button" class="btn btn-sm btn-danger mr-1" style="margin-bottom: 4px" *ngIf="!equipe && !pole"
                 (click)="myUser = row;dangerModal.show()" title="supprimer collaborateur">
                 <i class="fa fa-trash"></i>
               </button>

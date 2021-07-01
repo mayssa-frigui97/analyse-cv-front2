@@ -544,6 +544,15 @@ query CountColsPoles
   }
 }`;
 
+const findCompetencesCols = gql`
+query findCompetencesCols
+{
+  findCompetencesCols
+  {
+    nom
+  }
+}`;
+
 export {
   findCols,
   findCol,
@@ -565,5 +574,6 @@ export {
   findEquipe,
   refreshToken,
   CountColsPoles,
-  CountColsEquipes
+  CountColsEquipes,
+  findCompetencesCols
 }

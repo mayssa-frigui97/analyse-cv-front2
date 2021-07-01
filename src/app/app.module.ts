@@ -48,6 +48,11 @@ import { ChartsModule } from 'ng2-charts';
 import { DispatcherComponent } from './dispatcher/dispatcher.component';
 import { ToastrModule } from 'ngx-toastr';
 import { AlertModule } from 'ngx-bootstrap/alert';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+const config: SocketIoConfig = {
+  url: 'http://localhost:3000', options: {}
+};
 
 @NgModule({
   imports: [
@@ -74,6 +79,8 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     GraphQLModule,
     MDBBootstrapModule.forRoot(),
     AlertModule.forRoot(),
+    MatProgressSpinnerModule,
+    SocketIoModule.forRoot(config)
   ],
   declarations: [
     AppComponent,

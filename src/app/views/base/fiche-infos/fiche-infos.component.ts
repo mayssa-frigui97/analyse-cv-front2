@@ -17,14 +17,18 @@ export class FicheInfosComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private apollo : Apollo,
-    private activatedRoute: ActivatedRoute,) { }
+    private activatedRoute: ActivatedRoute,) {
+      // this.user=null;
+    }
 
   ngOnInit(): void {
     const id = +this.activatedRoute.snapshot.paramMap.get('id');
     if(id){
       this.getCol(id);
     }
-    this.user=this.auth.getUser();
+    else{
+      this.user=this.auth.getUser();
+    }
     console.log("user fiche:",this.user)
   }
 

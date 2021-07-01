@@ -162,6 +162,15 @@ const findCandidature = gql`
   }
 `;
 
+const findCompetencesCandidats = gql`
+query findCompetencesCandidats
+{
+  findCompetencesCandidats
+  {
+    nom
+  }
+}`;
+
 export {
   findPersonnes,
   findPersonne,
@@ -170,5 +179,6 @@ export {
   findFilterCands,
   search,
   removeCandidat,
-  findCandidature
+  findCandidature,
+  findCompetencesCandidats
 }

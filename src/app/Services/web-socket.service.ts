@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
-import * as io from 'socket.io-client'
+import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class WebSocketService {
+export class WebSocketService{
 
-  socket : any;
-  readonly uri : string = "http://localhost:3000";
-  constructor() {
-    this.socket =io(this.uri);
-    this.socket.on('connected', function() {
-      console.log("connected !");
-  });
-   }
+  // socket : any;
 
+  constructor(private socket : Socket) {
+    // this.socket = io(this.uri);
+    // this.socket.on('connected', function () {
+    //   console.log("connected !");
+    // });
+  }
 
   listen(eventName: string){
     return new Observable((subscriber)=> {
@@ -25,7 +24,14 @@ export class WebSocketService {
     });
   }
 
-  emi(eventName : string, data){
-    this.socket.emit(eventName,data);
+  emit(eventName : string, data){
+    return this.socket.emit(eventName,data);
   }
+
+  public getSockets(): Observable<any> {
+    return this.socket.fromEvent<any>('test event');
+  }
+
+
+
 }

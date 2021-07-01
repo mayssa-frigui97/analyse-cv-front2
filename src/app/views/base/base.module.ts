@@ -47,7 +47,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { ChartsModule } from 'ng2-charts';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { CollaborateursComponent } from './collaborateurs/collaborateurs.component';
 import { CollaborateursPipe } from './collaborateurs/collaborateurs.pipe';
 import { registerLocaleData } from '@angular/common';
@@ -87,7 +86,6 @@ registerLocaleData(localeFr);
   ],
   declarations: [
     CandidatsComponent,
-    DashboardComponent,
     CollaborateursComponent,
     CollaborateursPipe,
     CvComponent,

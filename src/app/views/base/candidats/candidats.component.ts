@@ -15,11 +15,11 @@ import { Equipe } from '../../../Models/equipe';
 import { Personne } from '../../../Models/personne';
 import { Pole } from '../../../Models/pole';
 import { AuthService } from '../../../Services/auth.service';
-import { findPersonnes, findFilterCands, updateRecommande, removePersonne, search, removeCandidat } from '../../../shared/Candidat';
+import { findPersonnes, findFilterCands, updateRecommande, removePersonne, search, removeCandidat, findCompetencesCandidats } from '../../../shared/Candidat';
 import { createCol, findEquipes, findPoles, findRoles } from '../../../shared/Collaborateur';
-import { findAllCompetences, updateStatutCv } from '../../../shared/Cv/query';
-import { DataTableItem } from '../data-table/data-table-datasource';
+import { updateStatutCv } from '../../../shared/Cv/query';
 import {ModalDirective} from 'ngx-bootstrap/modal';
+import { DataTableItem } from '../data-table-datasource';
 
 @Component({
   selector: 'app-candidats',
@@ -220,10 +220,10 @@ export class CandidatsComponent implements OnInit {
   getCompetences(): Competence[] {
     this.apollo
     .query<any>({
-        query: findAllCompetences,
+        query: findCompetencesCandidats,
       })
       .subscribe(({data}) => {
-        this.competences = data.findAllCompetences;
+        this.competences = data.findCompetencesCandidats;
         console.log('competences :', this.competences);
       });
     return this.competences;

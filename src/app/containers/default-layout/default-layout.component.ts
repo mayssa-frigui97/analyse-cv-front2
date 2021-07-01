@@ -1,4 +1,4 @@
-import { Component, SecurityContext, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, SecurityContext, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { Collaborateur } from '../../Models/collaborateur';
 import { AuthService } from '../../Services/auth.service';
 import { navItems, navItemsCol } from '../../_nav';
@@ -6,9 +6,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { AlertConfig } from 'ngx-bootstrap/alert';
 import { Apollo } from 'apollo-angular';
 import { findNotifCol } from '../../shared/Notification';
-import {Notification} from '../../Models/notification'
+import { Notification } from '../../Models/notification'
 import { UserRole } from '../../Enums/UserRole';
 import { WebSocketService } from '../../Services/web-socket.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 
 export function getAlertConfig(): AlertConfig {
@@ -20,18 +22,20 @@ export function getAlertConfig(): AlertConfig {
   encapsulation: ViewEncapsulation.None,
   templateUrl: './default-layout.component.html',
   styleUrls: ['./default-layout.component.css'],
-  providers:[{ provide: AlertConfig, useFactory: getAlertConfig }]
+  providers: [{ provide: AlertConfig, useFactory: getAlertConfig }]
 })
-export class DefaultLayoutComponent  implements OnInit{
+export class DefaultLayoutComponent implements OnInit, OnDestroy {
   public sidebarMinimized = false;
   public navItems = navItems;
   public navItemsCol = navItemsCol;
 
   user: Collaborateur;
   roleTest = true;
-  notifications : Notification;
+  notifications: Notification;
+  count: number;
 
   dismissible = true;
+  messages: Subject<any>;
   alerts: any = [
     {
       type: 'success',
@@ -48,13 +52,14 @@ export class DefaultLayoutComponent  implements OnInit{
   ];
 
   alertsDismiss: any = [];
+  private unsubscribeOnDestroy = new Subject<void>();
 
   constructor(
     private auth: AuthService,
     private apollo: Apollo,
-    private webSocketService :WebSocketService
-    ) {
-     }
+    private webSocketService: WebSocketService
+  ) {
+  }
 
   ngOnInit(): void {
     // this.webSocketService.listen('test event').subscribe((data)=>{
@@ -63,10 +68,24 @@ export class DefaultLayoutComponent  implements OnInit{
     // this.webSocketService.listen('connected').subscribe((data) => {
     //   console.log(data);
     // })
+
+    this.webSocketService.getSockets()
+    .pipe(takeUntil(this.unsubscribeOnDestroy))
+    .subscribe((data) => {
+      console.log("*".repeat(20))
+      console.log(data);
+    })
+    this.webSocketService.emit('test event', 'hello');
+
+
     this.user = this.auth.getUser();
-    if(this.user.role == UserRole.COLLABORATEUR) this.roleTest = false;
-    console.log("user header:",this.user);
-    this.getNotifications();
+    if (this.user.role == UserRole.COLLABORATEUR) this.roleTest = false;
+    console.log("user header:", this.user);
+  }
+
+  public ngOnDestroy() {
+    this.unsubscribeOnDestroy.next();
+    this.unsubscribeOnDestroy.complete();
   }
 
   logout() {
@@ -77,16 +96,23 @@ export class DefaultLayoutComponent  implements OnInit{
     this.sidebarMinimized = e;
   }
 
-  getNotifications(){
+  getNotifications() {
     this.apollo
-    .query<any>({
+      .query<any>({
         query: findNotifCol,
-        variables: {idCol: this.user.id}
+        variables: { idCol: this.user.id }
       })
-      .subscribe(({data}) => {
+      .subscribe(({ data }) => {
         this.notifications = data.findNotifCol;
         console.log('notifications :', this.notifications);
       });
   }
+
+  updateNotif() {
+    this.count++;
+    console.log("count update:", this.count);
+  }
+
+
 
 }

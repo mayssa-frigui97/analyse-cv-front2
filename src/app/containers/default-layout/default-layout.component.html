@@ -5,9 +5,9 @@
   <ul class="nav navbar-nav ml-auto">
     <li class="nav-item dropdown" dropdown placement="bottom right">
       <a class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle
-        (click)="true">
+        (click)="getNotifications();count = 0;">
         <img src="./../../../assets/img/bell.png" />
-        <span class="badge badge-pill badge-danger">5</span>
+        <span class="badge badge-pill badge-danger" *ngIf="count">{{count}}</span>
       </a>
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
         <!-- <a class="dropdown-item"><i class="fa fa-bell-o"></i> Updates<span class="badge badge-info">42</span></a>

@@ -14,10 +14,11 @@ import { Cv } from '../../../Models/cv';
 import { Equipe } from '../../../Models/equipe';
 import { Pole } from '../../../Models/pole';
 import { AuthService } from '../../../Services/auth.service';
-import { findCols, findEquipe, findEquipes, findEquipesPole, findFilterCols, findPole, findPoles, findPostes, findRoles, removeCol, searchCol, searchEquipe, searchPole, updateRole } from '../../../shared/Collaborateur/query';
+import { findCols, findCompetencesCols, findEquipe, findEquipes, findEquipesPole, findFilterCols, findPole, findPoles, findPostes, findRoles, removeCol, searchCol, searchEquipe, searchPole, updateRole } from '../../../shared/Collaborateur/query';
 import { findAllCompetences } from '../../../shared/Cv/query';
 import { createNotif } from '../../../shared/Notification/query';
-import { DataTableItem } from '../data-table/data-table-datasource';
+import { DataTableItem } from '../data-table-datasource';
+import { WebSocketService } from './../../../Services/web-socket.service';
 
 @Component({
   selector: 'app-collaborateurs',
@@ -66,7 +67,8 @@ export class CollaborateursComponent implements OnInit {
   constructor(
     private apollo: Apollo,
     private toastr: ToastrService,
-    private auth: AuthService
+    private auth: AuthService,
+    private webSocketService: WebSocketService
   ) {
     this.dataSource = new MatTableDataSource();
   }
@@ -391,10 +393,10 @@ export class CollaborateursComponent implements OnInit {
   async getCompetences() {
     await this.apollo
       .query<any>({
-        query: findAllCompetences,
+        query: findCompetencesCols,
       })
       .subscribe(({ data }) => {
-        this.competences = data.findAllCompetences;
+        this.competences = data.findCompetencesCols;
         console.log('competences :', this.competences);
       });
   }
@@ -442,6 +444,7 @@ export class CollaborateursComponent implements OnInit {
     }).subscribe(res => {
       console.log("res notif:",res);
     });
+    this.webSocketService.emit('test event','notif');
   }
 
 }

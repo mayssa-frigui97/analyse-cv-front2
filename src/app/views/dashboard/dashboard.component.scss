@@ -1,0 +1,23 @@
+.labelComp{
+  margin: auto;
+  width: 50%;
+}
+
+.headerDiff
+{
+  padding-bottom: 19.5px;
+  padding-top: 19.5px;
+}
+
+.ng-select.ng-select.ng-select-multiple.ng-select-searchable.ng-select-clearable ,.ng-select.ng-select.ng-select-searchable{
+  font-size: 12px!important;
+}
+
+
+
+@media (max-width: 991.98px){
+  .ng-select.ng-select.ng-select-multiple.ng-select-searchable, .ng-select.ng-select.ng-select-searchable {
+    margin-bottom: 7px;
+    margin-top: 5px;
+  }
+  }
