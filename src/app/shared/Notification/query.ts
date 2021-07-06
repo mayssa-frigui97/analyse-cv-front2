@@ -42,22 +42,18 @@ const createNotif = gql`
       collaborateur{
         id
         nom
-        cin
-        etatCivil
-        dateNaiss
-        adresse
-        tel
-        email
-        avatar
-        nomUtilisateur
-        telPro
-        emailPro
-        role
-        poste
-        dateEmb
-        salaire
-        evaluation
       }
+    }
+  }`;
+
+const updateNotif = gql`
+  mutation updateNotif($lu: Boolean!, $idNotif: Int!)
+  {
+    updateNotif(lu: $lu,idNotif :$idNotif){
+      id
+      date
+      description
+      lu
     }
   }`;
 
@@ -65,5 +61,6 @@ const createNotif = gql`
 
 export {
   findNotifCol,
-  createNotif
+  createNotif,
+  updateNotif
 }

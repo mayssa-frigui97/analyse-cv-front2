@@ -12,7 +12,11 @@
           <div class="col-lg-6 col-md-7 text-center text-md-start">
             <h2 class="h1 mt-2">{{user.nom | titlecase}}</h2>
             <h6>{{user.poste}}</h6><br>
-            <p class="text-center"><a href="{{user.cv.cmptLinkedin}}"><i class="fa fa-linkedin-square fa-3x"></i></a></p>
+            <p class="text-center">
+              <a href="{{user.cv.cmptLinkedin}}" target="_blank">
+                <i class="fa fa-linkedin-square fa-3x"></i>
+              </a>
+            </p>
           </div>
         </div>
       </div>

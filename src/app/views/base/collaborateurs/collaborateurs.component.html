@@ -3,8 +3,8 @@
   <div class="card-body">
     <div class="row">
       <div class="col-md-2 selectCol" *ngIf="!equipe && !pole">
-        <ng-select [items]="poles" bindLabel="nom" bindValue="id" placeholder="Selectionner le pôle"
-          appendTo="body" multiple="true" [(ngModel)]="selectedPoles" (change)="getEquipesPoles(selectedPoles)">
+        <ng-select [items]="poles" bindLabel="nom" bindValue="id" placeholder="Selectionner le pôle" appendTo="body"
+          multiple="true" [(ngModel)]="selectedPoles" (change)="getEquipesPoles(selectedPoles)">
         </ng-select>
       </div>
       <div class="col-md-2 selectCol" *ngIf="!equipe&& !pole">
@@ -29,8 +29,8 @@
       </div>
       <div class="col-md-2 text-center selectCol ">
         <button type="button" class="btn btn-primary btnAdd"
-        (click)="getFilterCols(selectedPoles,selectedEquipes,selectedComp,selectedPoste)">
-        <i class="fa fa-search"></i>&nbsp;Filtrer</button>
+          (click)="getFilterCols(selectedPoles,selectedEquipes,selectedComp,selectedPoste)">
+          <i class="fa fa-search"></i>&nbsp;Filtrer</button>
       </div>
     </div>
     <div class="row rowSearch">
@@ -39,8 +39,8 @@
         <div class="input-group-prepend">
           <span class="input-group-text spanSearch" (click)="search(searchWord)"><i class="fa fa-search"></i></span>
         </div>
-        <input type="text" id="input1-group1" name="input1-group1" class="form-control" placeholder="Rechercher" [(ngModel)]="searchWord"
-        (keyup)="search($event)">
+        <input type="text" id="input1-group1" name="input1-group1" class="form-control" placeholder="Rechercher"
+          [(ngModel)]="searchWord" (keyup)="search($event)">
       </div>
     </div>
     <div class="row">
@@ -93,12 +93,13 @@
                 title="voir CV collaborateur" [routerLink]="['cv', row.id]" (click)="createNotif(row.id)">
                 <i class="fa fa-eye"></i>
               </button>
-              <button type="button" class="btn btn-sm btn-primary mr-1" style="margin-bottom: 4px" *ngIf="!equipe && !pole"
-                (click)="myUser = row;selectedRole=myUser.role;primaryModal.show()" title="modifier role">
+              <button type="button" class="btn btn-sm btn-primary mr-1" style="margin-bottom: 4px"
+                *ngIf="!equipe && !pole" (click)="myUser = row;update(myUser.role);primaryModal.show();"
+                title="modifier role">
                 <i class="fa fa-pencil-square-o"></i>
               </button>
-              <button type="button" class="btn btn-sm btn-danger mr-1" style="margin-bottom: 4px" *ngIf="!equipe && !pole"
-                (click)="myUser = row;dangerModal.show()" title="supprimer collaborateur">
+              <button type="button" class="btn btn-sm btn-danger mr-1" style="margin-bottom: 4px"
+                *ngIf="!equipe && !pole" (click)="myUser = row;dangerModal.show()" title="supprimer collaborateur">
                 <i class="fa fa-trash"></i>
               </button>
             </td>
@@ -129,7 +130,7 @@
   <div class="modal-dialog modal-danger" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Supprimer un candidat</h4>
+        <h4 class="modal-title">Supprimer un collaborateur</h4>
         <button type="button" class="close" (click)="dangerModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -146,7 +147,8 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div bsModal #primaryModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div bsModal #primaryModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog modal-primary" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -157,17 +159,47 @@
       </div>
       <div class="modal-body">
         <div class="col-md-12">
-          <p>Voulez-vous changer le role du collaborateur {{myUser?.nom}} ?</p>
-          <div class="col-md-6" *ngIf="roles">
-          <ng-select [items]="roles" bindLabel="role" bindValue="role" placeholder="Selectionner le rôle"
-            appendTo="body" [(ngModel)]="selectedRole">
-          </ng-select>
+          <p>Voulez-vous changer le rôle du collaborateur {{myUser?.nom}} ?</p>
+          <div class="row">
+            <div class="col-md-6" *ngIf="roles">
+              <ng-select [items]="roles" bindLabel="role" bindValue="role" placeholder="Selectionner le rôle"
+                appendTo="body" [(ngModel)]="selectedRole" (change)="updateResp(selectedRole)">
+              </ng-select>
+            </div>
+            <div class="col-md-6" *ngIf="testRP">
+              <ng-select [items]="poles" bindLabel="nom" bindValue="id" placeholder="Selectionner le pôle"
+                appendTo="body" [(ngModel)]="selectedPole">
+              </ng-select>
+            </div>
+            <div class="col-md-6" *ngIf="testTL || testCol">
+              <ng-select [items]="equipes" bindLabel="nom" bindValue="id" placeholder="Selectionner l'équipe"
+                appendTo="body" [(ngModel)]="selectedEquipe">
+              </ng-select>
+            </div>
+          </div>
+          <div class="row mt" *ngIf="testTL || testRP">
+            <p>
+              <input type="checkbox" name="checkBox" id="checkBox" [ngModel]="checkBox" (change)="checkBox=!checkBox">
+              <span *ngIf="testTL">Si vous allez affecter ce rôle vous devez savoir que le chef de cette équipe va devenir un collaborateur.</span>
+              <span *ngIf="testTL2 && testRP">Si vous allez affecter ce rôle vous devez tout d'abord affecter un collaborateur à cette équipe.</span>
+              <span *ngIf="testRP && !testTL2">Si vous allez affecter ce rôle vous devez savoir que le responsable de ce pôle va devenir un collaborateur.</span>
+            </p>
           </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="primaryModal.hide()">Annuler</button>
-        <button type="button" class="btn btn-primary" (click)="updateUserRole(myUser.id,selectedRole);primaryModal.hide()">
+        <button type="submit" class="btn btn-primary" [disabled]="!checkBox || !selectedEquipe || !selectedRole" *ngIf="testTL"
+        (click)="updateUserRole(myUser.id,selectedRole);primaryModal.hide()">
+          Enregistrer</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!checkBox || !selectedPole || !selectedRole" *ngIf="testRP"
+        (click)="updateUserRole(myUser.id,selectedRole);primaryModal.hide()">
+          Enregistrer</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!selectedEquipe || !selectedRole" *ngIf="testCol"
+        (click)="updateUserRole(myUser.id,selectedRole);primaryModal.hide()">
+          Enregistrer</button>
+        <button type="submit" class="btn btn-primary" *ngIf="!testTL && !testRP && !testCol" [disabled]="!selectedRole"
+        (click)="updateUserRole(myUser.id,selectedRole);primaryModal.hide()">
           Enregistrer</button>
       </div>
     </div><!-- /.modal-content -->

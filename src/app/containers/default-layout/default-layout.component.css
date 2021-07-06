@@ -106,3 +106,11 @@ hr:not([size]){
     left: 30%;
 }
 }
+
+.allNotif {
+  text-decoration: underline!important;
+}
+
+.allNotif.a{
+  cursor: pointer!important;
+}

@@ -1,6 +1,7 @@
 import { Collaborateur } from "./collaborateur";
 
 export class Notification {
+  [x: string]: any;
 
   public id: number;
 

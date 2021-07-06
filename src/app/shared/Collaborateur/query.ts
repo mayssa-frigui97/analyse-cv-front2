@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { INavData } from '@coreui/angular';
 
 const findCols = gql`
   query findCols($equipe: Int, $pole: Int) {
@@ -177,6 +178,94 @@ const updateRole = gql`
       dateEmb
       salaire
       evaluation
+    }
+  }`;
+
+const updateRp = gql`
+  mutation updateRp($rpId: Int!, $poleId: Int!)
+  {
+    updateRp(rpId: $rpId, poleId: $poleId){
+      id
+      nom
+      rp{
+        id
+        nom
+        cin
+        dateNaiss
+        etatCivil
+        adresse
+        tel
+        email
+        avatar
+        nomUtilisateur
+        telPro
+        emailPro
+        role
+        poste
+        dateEmb
+        salaire
+        evaluation
+      }
+    }
+  }`;
+
+const updateTl = gql`
+  mutation updateTl($tlId: Int!, $equipeId: Int!)
+  {
+    updateTl(tlId: $tlId, equipeId: $equipeId){
+      id
+      nom
+      teamleader{
+        id
+        nom
+        cin
+        dateNaiss
+        etatCivil
+        adresse
+        tel
+        email
+        avatar
+        nomUtilisateur
+        telPro
+        emailPro
+        role
+        poste
+        dateEmb
+        salaire
+        evaluation
+      }
+    }
+  }`;
+
+const updateColEquipe = gql`
+  mutation updateColEquipe($equipeId: Int!, $idCol: Int!)
+  {
+    updateColEquipe(equipeId: $equipeId, idCol: $idCol){
+      id
+      nom
+      cin
+      dateNaiss
+      etatCivil
+      adresse
+      tel
+      email
+      avatar
+      nomUtilisateur
+      telPro
+      emailPro
+      role
+      poste
+      dateEmb
+      salaire
+      evaluation
+      equipe{
+        id
+        nom
+        pole{
+          id
+          nom
+        }
+      }
     }
   }`;
 
@@ -575,5 +664,8 @@ export {
   refreshToken,
   CountColsPoles,
   CountColsEquipes,
-  findCompetencesCols
+  findCompetencesCols,
+  updateRp,
+  updateTl,
+  updateColEquipe
 }

@@ -1,0 +1,28 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header" *ngIf="notifications && notifications.length >0">
+          <strong>Toutes les notifications</strong>
+        </div>
+        <div class="card-body" *ngIf="notifications && notifications.length >0">
+          <div *ngFor="let notif of notifications">
+            <alert [type]="'info'">{{notif.description}}
+              <p><small class="text-muted mr-3">
+                <i class="icon-calendar"></i> {{notif.date | date:'h:mm, dd/MM/yyyy'}}
+              </small></p>
+            </alert>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="notifications.length === 0">
+          <div>
+            <alert type="warning">
+              <strong>Pas de notifications à afficher</strong>
+            </alert>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

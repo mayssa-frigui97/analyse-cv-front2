@@ -53,6 +53,7 @@ export class CandidatsComponent implements OnInit {
   @ViewChild(MatTable) table!: MatTable<DataTableItem>;
   @ViewChild('largeModal') public largeModal: ModalDirective;
   @ViewChild('dangerModal') public dangerModal: ModalDirective;
+  @ViewChild('primaryModal') public primaryModal: ModalDirective;
   dataSource: MatTableDataSource<any>;
 
 
@@ -65,7 +66,6 @@ export class CandidatsComponent implements OnInit {
     private auth: AuthService
     ){
       this.dataSource = new MatTableDataSource();
-      // this.dataSource.data =[];
      }
 
   ngOnInit(): void {

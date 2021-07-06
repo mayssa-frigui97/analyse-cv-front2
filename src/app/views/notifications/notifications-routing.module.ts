@@ -1,43 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { UserRole } from '../../Enums/UserRole';
+import { AuthGuard } from '../../Services/auth-guard.service';
+import { NotificationsComponent } from './notifications.component';
 
-import { AlertsComponent } from './alerts.component';
-import { BadgesComponent } from './badges.component';
-import { ModalsComponent } from './modals.component';
 
 const routes: Routes = [
   {
+    component: NotificationsComponent,
     path: '',
+    canActivate: [AuthGuard],
     data: {
-      title: 'Notifications'
-    },
-    children: [
-      {
-        path: '',
-        redirectTo: 'alerts'
-      },
-      {
-        path: 'alerts',
-        component: AlertsComponent,
-        data: {
-          title: 'Alerts'
-        }
-      },
-      {
-        path: 'badges',
-        component: BadgesComponent,
-        data: {
-          title: 'Badges'
-        }
-      },
-      {
-        path: 'modals',
-        component: ModalsComponent,
-        data: {
-          title: 'Modals'
-        }
-      }
-    ]
+      title: 'Notifications',
+      allowedRoles: [UserRole.COLLABORATEUR, UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]
+    }
   }
 ];
 

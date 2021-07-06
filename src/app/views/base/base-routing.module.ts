@@ -46,7 +46,7 @@ const routes: Routes = [
     component: CvComponent,
     canActivate: [AuthGuard],
     data: {
-      title: 'CV',
+      title: 'Candidats / CV',
       allowedRoles: [UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]
     }
   },
@@ -64,7 +64,7 @@ const routes: Routes = [
     component: FicheInfosComponent,
     canActivate: [AuthGuard],
     data: {
-      title: 'CV',
+      title: 'Collaborateurs / CV',
       allowedRoles: [UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]
     }
   }

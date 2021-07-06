@@ -14,7 +14,7 @@ import { Cv } from '../../../Models/cv';
 import { Equipe } from '../../../Models/equipe';
 import { Pole } from '../../../Models/pole';
 import { AuthService } from '../../../Services/auth.service';
-import { findCols, findCompetencesCols, findEquipe, findEquipes, findEquipesPole, findFilterCols, findPole, findPoles, findPostes, findRoles, removeCol, searchCol, searchEquipe, searchPole, updateRole } from '../../../shared/Collaborateur/query';
+import { findCols, findCompetencesCols, findEquipe, findEquipes, findEquipesPole, findFilterCols, findPole, findPoles, findPostes, findRoles, removeCol, searchCol, searchEquipe, searchPole, updateColEquipe, updateRole, updateRp, updateTl } from '../../../shared/Collaborateur/query';
 import { findAllCompetences } from '../../../shared/Cv/query';
 import { createNotif } from '../../../shared/Notification/query';
 import { DataTableItem } from '../data-table-datasource';
@@ -51,7 +51,14 @@ export class CollaborateursComponent implements OnInit {
   searchWord: string;
   roles: Collaborateur[];
   selectedRole: UserRole;
-  userAuth : String;
+  userAuth: String;
+  testRP = false;
+  testTL = false;
+  testCol = false;
+  testTL2 = false;
+  checkBox = false;
+  selectedEquipe: number;
+  selectedPole: number;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -160,11 +167,11 @@ export class CollaborateursComponent implements OnInit {
     selectedComp?: string[], selectedPoste?: string[]) {
     let variables = {};
     if (this.equipe) {
-      variables = {...variables, selectedEquipes: this.equipe}
+      variables = { ...variables, selectedEquipes: this.equipe }
     }
     else {
       if (this.pole) {
-        variables = { ...variables,selectedPoles: this.pole}
+        variables = { ...variables, selectedPoles: this.pole }
 
       }
       else {
@@ -184,6 +191,7 @@ export class CollaborateursComponent implements OnInit {
     }
     return variables;
   }
+
   searchCols(searchWord: string) {
     this.selectedComp = [];
     this.selectedPoles = [];
@@ -311,20 +319,58 @@ export class CollaborateursComponent implements OnInit {
   }
 
   updateUserRole(idCol: number, role: UserRole) {
-    console.log("myUser:", this.myUser);
+    if (this.myUser.role == UserRole.TEAMLEADER) {
+      if (role == UserRole.COLLABORATEUR || role == UserRole.RH) {
+        this.toastr.error("Modification impossible!!", 'Error');
+        console.log("Modification impossible!!")
+      }
+      else if(role == UserRole.RP){
+        this.testTL2 = true;
+        this.testRP=false;
+        this.mutation(updateRp,{ rpId: idCol, poleId: this.selectedPole });
+      }
+    }
+    else if (this.myUser.role == UserRole.RP) {
+      if (role == UserRole.COLLABORATEUR || role == UserRole.TEAMLEADER || role == UserRole.RH) {
+        this.toastr.error("Modification impossible!!", 'Error');
+        console.log("Modification impossible!!")
+      }
+    }
+    else if (this.myUser.role == UserRole.RH) {
+      if (role == UserRole.COLLABORATEUR || role == UserRole.TEAMLEADER || role == UserRole.RP) {
+        this.toastr.error("Modification impossible!!", 'Error');
+        console.log("Modification impossible!!")
+      }
+    }
+    else {
+      if (role == UserRole.RH) {
+        this.toastr.error("Modification impossible!!", 'Error');
+        console.log("Modification impossible!!")
+      }
+      else {
+        if (this.testRP && this.selectedPole) {
+          this.mutation(updateRp,{ rpId: idCol, poleId: this.selectedPole });
+        }
+        else if (this.testTL && this.selectedEquipe) {
+          this.mutation(updateTl,{ tlId: idCol, equipeId: this.selectedEquipe });
+        }
+        else if (this.testCol && this.selectedEquipe) {
+          this.mutation(updateColEquipe,{ equipeId: this.selectedEquipe, idCol })
+        }
+      }
+    }
+  }
+
+  mutation (mutation, variables){
     this.apollo.mutate({
-      mutation: updateRole,
-      variables: { idCol, role }
+      mutation: mutation,
+      variables: variables
     }).subscribe(res => {
-      // const indexCand = this.dataSource.data.findIndex((col)=>col.id == idCol);
-      // if(indexCand>-1){
-      //   let listCandidats = [...this.dataSource.data];//list frozen //bch tepointi 3la case memoire okhra
-      //   listCandidats.splice(indexCand,1);/*supp index*/
-      //   this.dataSource.data = listCandidats;
-      // }
       console.log("candidats modif role:", res);
       this.toastr.success('Role changé avec succès');
-
+      this.dataSource.data = [];
+      if(mutation == updateRp) this.getPoles();
+      this.getCols();
     }, error => {
       this.toastr.error("Modification impossible!!", 'Error');
       console.log("Modification impossible!!")
@@ -355,7 +401,7 @@ export class CollaborateursComponent implements OnInit {
   getEquipesPoles(selectedPoles: number[]) {
     let variables = {};
     if (selectedPoles && selectedPoles[0]) {
-      variables = { idPoles : selectedPoles }
+      variables = { idPoles: selectedPoles }
     }
     this.apollo
       .query<any>({
@@ -435,16 +481,68 @@ export class CollaborateursComponent implements OnInit {
       });
   }
 
-  createNotif(colId : number){
-    let createNotifInput = {collaborateurId: colId, description: `${this.userAuth} a consulté votre CV`}
-    console.log("notifInput:",createNotifInput);
+  createNotif(colId: number) {
+    let createNotifInput = { collaborateurId: colId, description: `${this.userAuth} a consulté votre CV` }
+    console.log("notifInput:", createNotifInput);
     this.apollo.mutate({
       mutation: createNotif,
       variables: { createNotifInput }
     }).subscribe(res => {
-      console.log("res notif:",res);
+      console.log("res notif:", res);
     });
-    this.webSocketService.emit('test event','notif');
+    console.log("colId:", colId);
+    const col = colId.toString();
+    this.webSocketService.emit('test event', col);
+  }
+
+  updateResp(selectedRole) {
+    if (selectedRole == UserRole.TEAMLEADER) {
+      this.selectedPole = null;
+      this.testTL = true;
+      this.testTL2 = false;
+      this.testRP = false;
+      this.testCol = false;
+    }
+    else if (selectedRole == UserRole.RP) {
+      this.testRP = true;
+      this.testTL = false;
+      this.testTL2 = false;
+      this.testCol = false;
+    }
+    else if (selectedRole == UserRole.COLLABORATEUR) {
+      this.testRP = false;
+      this.testTL2 = false;
+      this.testTL = false;
+      this.testCol = true;
+    }
+    else {
+      this.testTL = false;
+      this.testRP = false;
+      this.testTL2 = false;
+      this.testCol = false;
+    }
+    if (this.myUser.role == UserRole.TEAMLEADER) {
+      if (selectedRole == UserRole.RP){
+        this.testTL2 = true;
+        this.testRP=true;
+        this.testTL = false;
+        this.testCol = false;
+      }
+    }
+  }
+
+  update(role) {
+    this.selectedRole = role;
+    this.checkBox = false;
+    this.selectedEquipe = null;
+    this.selectedPole = null;
+    this.testTL = false;
+    this.testRP = false;
+    this.testCol = false;
+    if (this.selectedRole == UserRole.COLLABORATEUR) {
+      this.selectedEquipe = this.myUser.equipe.id;
+      this.testCol = true;
+    }
   }
 
 }

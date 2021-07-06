@@ -21,3 +21,11 @@
     margin-top: 5px;
   }
   }
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder {
+  padding-bottom: 0!important
+}
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container {
+  padding-top: 0!important;
+}

@@ -4,13 +4,7 @@ import { NgModule } from '@angular/core';
 
 // Alert Component
 import { AlertModule } from 'ngx-bootstrap/alert';
-import { AlertsComponent } from './alerts.component';
-
-import { BadgesComponent } from './badges.component';
-
-// Modal Component
-import { ModalModule } from 'ngx-bootstrap/modal';
-import { ModalsComponent } from './modals.component';
+import { NotificationsComponent } from './notifications.component';
 
 // Notifications Routing
 import { NotificationsRoutingModule } from './notifications-routing.module';
@@ -19,13 +13,10 @@ import { NotificationsRoutingModule } from './notifications-routing.module';
   imports: [
     CommonModule,
     NotificationsRoutingModule,
-    AlertModule.forRoot(),
-    ModalModule.forRoot()
+    AlertModule.forRoot()
   ],
   declarations: [
-    AlertsComponent,
-    BadgesComponent,
-    ModalsComponent
+    NotificationsComponent
   ]
 })
 export class NotificationsModule { }

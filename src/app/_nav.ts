@@ -25,6 +25,11 @@ export const navItems: INavData[] = [
     name: 'Collaborateurs',
     url: '/base/collaborateurs',
     icon: 'icon-people'
+  },
+  {
+    name: 'Notifications',
+    url: '/notifications',
+    icon: 'icon-bell'
   }
 ];
 
@@ -43,6 +48,11 @@ export const navItemsCol: INavData[] = [
     name: 'Historique',
     url: '/base/historique',
     icon: 'fa fa-history'
+  },
+  {
+    name: 'Notifications',
+    url: '/notifications',
+    icon: 'icon-bell'
   }
 ]
 
